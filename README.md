@@ -1,7 +1,7 @@
 # Walmart-Interview
 Java, Algorithm
 
-[3 Longest Substring Without Repeating Characters] [25.0%	Medium]使用 HashSet✅
+[3 Longest Substring Without Repeating Characters] [25.0%	Medium]使用 HashSet, HashMap✅
 
 [4 Median of Two Sorted Arrays] [23.8% Hard]使用 HashMap✅
 

@@ -7,7 +7,7 @@ Java, Algorithm
 
 [21 Merge Two Sorted Lists] [43.0% Easy]使用一個helper 最還要注意 if(p ==null) else✅
 
-[26 Remove Duplicates from Sorted Array] [37.7%	Easy]使用 HashMap✅
+[26 Remove Duplicates from Sorted Array] [37.7%	Easy]爛題目✅
 
 [46 Permutations] [49.7% Medium]使用 HashMap✅
 

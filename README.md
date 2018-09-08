@@ -13,7 +13,7 @@ Java, Algorithm
 
 [70 Climbing Stairs] [42.0%	Easy]使用 DP mem[i] = mem[i-1] + mem[i-2]✅
 
-[206 Reverse Linked List] [49.1% Easy]使用 HashMap✅
+[206 Reverse Linked List] [49.1% Easy]使用 prev temp head✅
 
 [214 Shortest Palindrome] [25.8% Hard]使用 HashMap✅
 

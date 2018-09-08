@@ -19,7 +19,7 @@ Java, Algorithm
 
 [230 Kth Smallest Element in a BST] [47.2% Medium]使用 HashMap✅
 
-[283 Move Zeroes] [52.3% Easy]使用 HashMap✅
+[283 Move Zeroes] [52.3% Easy]使用 nums[start++]✅
 
 [344 Reverse String] [61.3%	Easy]使用 HashMap✅
 

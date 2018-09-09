@@ -19,6 +19,10 @@ Java, Algorithm
 
 [148 Sort List] [31.6%	Medium]請記住 取mid 再 merge✅
 
+[153 Find Minimum in Rotated Sorted Array] [41.5%	Medium]請記住 binary search✅
+
+[自創 Find Maximum in Rotated Sorted Array] [41.5%	Medium]請記住 binary search✅
+
 [206 Reverse Linked List] [49.1% Easy]使用 prev temp head✅
 
 [214 Shortest Palindrome] [25.8% Hard]背下來✅

@@ -16,39 +16,399 @@ Java, Algorithm
             }
         }
         return res;
-    }
+ }
 ```
 
 [3 Longest Substring Without Repeating Characters] [25.0%	Medium]使用 HashSet, HashMap✅
+```java
+ public int lengthOfLongestSubstring(String s) {
+        if(s == null || s.length() == 0) return 0;
+        HashMap<Character, Integer> map = new HashMap<>();
+        int res = 0;
+        for(int i = 0, j = 0; i < s.length(); i++){
+            if(map.containsKey(s.charAt(i))){
+                j = Math.max(j, map.get(s.charAt(i)) + 1);
+            }
+            map.put(s.charAt(i), i);
+            res = Math.max(res, i - j + 1);
+            
+        }
+        return res;
+}
+```
 
 [4 Median of Two Sorted Arrays] [23.8% Hard] 先merge兩個array，再去算中位數✅
+```java
+ public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int i = 0, nums1Size = nums1.length;  //  setting pointer for first array
+        int j = 0, nums2Size = nums2.length;    //  setting pointer for second array
+        int total = nums1Size + nums2Size;   //  getting total elements in both arrays
+
+        int mergeds1s2[] = new int[total];  //  new array to store sorted elemented
+        int k=0;
+
+        //  merging both arrays into mergeds1s2 to get the final sorted array
+        while(i<nums1Size && j<nums2Size) {
+
+            if(nums1[i] < nums2[j]) mergeds1s2[k] = nums1[i++];
+            else mergeds1s2[k] = nums2[j++];
+            k++;
+        }
+
+        if(i==nums1Size){
+            while (j<nums2Size) mergeds1s2[k++] = nums2[j++];
+        }
+        else {
+            while (i<nums1Size) mergeds1s2[k++] = nums1[i++];
+        }
+
+        //  returning the median.
+        if(k%2 == 1) {
+            return mergeds1s2[k/2];
+        }
+        else{
+            return (mergeds1s2[k/2]+mergeds1s2[k/2 - 1])/2.0;
+        }
+    }
+```
 
 [21 Merge Two Sorted Lists] [43.0% Easy]使用一個helper 最還要注意 if(p ==null) else✅
+```java
+public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        if(l1 == null && l2 == null) return null;
+        ListNode dummy = new ListNode(0);
+        ListNode cur = dummy;
+        cur.next = merge(l1, l2);
+        return dummy.next;
+    }
+
+    public static ListNode merge(ListNode l1, ListNode l2){
+        ListNode p = l1, q = l2;
+        ListNode dummy = new ListNode(0);
+        ListNode cur = dummy;
+
+        while(p != null && q != null){
+            if(p.val <= q.val){
+                cur.next = new ListNode(p.val);
+                p = p.next;
+                cur = cur.next;
+            }else{
+                cur.next = new ListNode(q.val);
+                q = q.next;
+                cur = cur.next;
+            }
+        }
+        if(p == null){
+            cur.next = q;
+        }else{
+            cur.next = p;
+        }
+        return dummy.next;
+    }
+```
 
 [26 Remove Duplicates from Sorted Array] [37.7%	Easy]爛題目✅
+```java
+ public int removeDuplicates(int[] nums) {
+        if(nums == null) return 0;
+        int count = 1;
+        for(int i = 1; i < nums.length; i++){
+            if(nums[i] != nums[i-1]){
+                nums[count++] = nums[i];
+            }
+        }
+        return count;
+    }
+```
 
 [46 Permutations] [49.7% Medium]使用 backtracking helper✅
+```java
+public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
+        if(nums == null || nums.length == 0) return res;
+        helper(res, list, nums);
+        return res;
+    }
+
+    public static void helper(List<List<Integer>> res, List<Integer> list, int[] nums){
+        if(list.size() == nums.length){
+            res.add(new ArrayList<>(list));
+            return;
+        }
+        for(int i = 0; i < nums.length; i++){
+            if(list.contains(nums[i])) continue;
+            list.add(nums[i]);
+            helper(res, list, nums);
+            list.remove(list.size() - 1);
+        }
+
+
+    }
+```
 
 [49 Group Anagrams] [49.7% Medium]使用 HashMap來記錄，再來sort string 放到 HashMap✅
+```java
+public List<List<String>> groupAnagrams(String[] strs) {
+        List<List<String>> res = new ArrayList<>();
+        if (strs == null || strs.length == 0) return res;
+        HashMap<String, Integer> map = new HashMap<>();
+        for (String str : strs ){
+            char[] ch = str.toCharArray();
+            Arrays.sort(ch);
+            String s = new String(ch);
+            if (map.containsKey(s)){
+                // res.get 是指 get ArrayList index 位置
+                res.get(map.get(s)-1).add(str);
+            }else{
+                List<String> list = new ArrayList<>();
+                list.add(str);
+                res.add(list);
+                map.put(s,res.size());
+            }
+        }
+        return res;
+
+    }
+```
 
 [70 Climbing Stairs] [42.0%	Easy]使用 DP mem[i] = mem[i-1] + mem[i-2]✅
+```java
+public int climbStairs(int n) {
+        if(n == 0 || n == 1 || n == 2){
+            return n;
+        }
+        int[] mem = new int[n];
+        mem[0] = 1;
+        mem[1] = 2;
+        for(int i = 2; i < n; i++){
+            mem[i] = mem[i-1] + mem[i-2];
+        }
+        return mem[n-1];
+    }
+```
 
 [148 Sort List] [31.6%	Medium]請記住 取mid 再 merge✅
+```java
+public ListNode sortList(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ListNode mid = getmid(head);
+        ListNode next = mid.next;
+        mid.next = null;
+        return merge(sortList(head), sortList(next));
+    }
+
+    public static ListNode getmid(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+
+    public static ListNode merge(ListNode a, ListNode b) {
+        ListNode dummy = new ListNode(0);
+        ListNode cur = dummy;
+        while (a != null && b != null) {
+            if (a.val <= b.val) {
+                cur.next = a;
+                a = a.next;
+            } else {
+                cur.next = b;
+                b = b.next;
+            }
+            cur = cur.next;
+        }
+        if (a == null) cur.next = b;
+        else cur.next = a;
+        return dummy.next;
+    }
+```
 
 [153 Find Minimum in Rotated Sorted Array] [41.5%	Medium]請記住 binary search✅
+```java
+public int findMin(int[] nums) {
+        if(nums.length == 0) return -1;
+        int start = 0;
+        int end = nums.length -1;
+        while(start + 1 < end){
+            int mid = (end - start) / 2 + start;
+            if(nums[mid] < nums[end]){
+                end = mid;
+            }else{ // [1,3,3] 類似有重複
+                start = mid;
+            }
+        }
+        if(nums[start] < nums[end]) return nums[start];
+        else return nums[end];
+}
+```
 
 [自創 Find Maximum in Rotated Sorted Array] [41.5%	Medium]請記住 binary search✅
+```java
+public static void main(String[] args) {
+        int[] array = {4,5,6,1,2,3};
+        System.out.println(findMin(array));
+    }
+
+    public static int findMin(int[] nums) {
+        if(nums.length == 0) return -1;
+        int start = 0;
+        int end = nums.length -1;
+        while(start + 1 < end){
+            int mid = (end - start) / 2 + start;
+            if(nums[start] > nums[mid]){
+                end = mid;
+            }else{ // [1,3,3] 類似有重複
+                start = mid;
+            }
+        }
+        if(nums[start] > nums[end]) return nums[start];
+        else return nums[end];
+    }
+```
 
 [206 Reverse Linked List] [49.1% Easy]使用 prev temp head✅
+```java
+public ListNode reverseList(ListNode head) {
+        ListNode prev = null;
+        if (head == null || head.next == null) return head;
+        while(head != null) {
+            ListNode temp = head.next;
+            head.next = prev;
+            prev = head;
+            head = temp;
+        }
+        return prev;
+    }
+```
 
 [214 Shortest Palindrome] [25.8% Hard]背下來✅
+```java
+public String shortestPalindrome(String s) {
+        int i = 0;
+        int end = s.length()-1;
+        int j = s.length()-1;
+        while(i < j){
+            if(s.charAt(i) == s.charAt(j)){
+                i++;
+                j--;
+            }else{
+                i = 0;
+                end--;
+                j = end;
+            }
+        }
+        return new StringBuilder(s.substring(end+1)).reverse().toString()+s;
+    }
+```
 
 [230 Kth Smallest Element in a BST] [47.2% Medium]使用 HashMap✅
+```java
+private int count = 0, res = 0;
+    public int kthSmallest(TreeNode root, int k) {
+        count = k;
+        helper(root);
+        return res;
+    }
+
+    public void helper(TreeNode root){
+        if(root == null) return;
+        helper(root.left);
+        count--;
+        if(count == 0){
+            res = root.val;
+        }
+        helper(root.right);
+    }
+```
 
 [232 Implement Queue using Stacks] [39.5% Easy]使用 兩個stack✅
+```java
+public class ImplementQueueusingStacks {
+    Stack<Integer> s1 = new Stack<>();
+    Stack<Integer> s2 = new Stack<>();
+
+    public void push(int x) {
+
+        s1.push(x);
+    }
+
+    public int pop() {
+        if(!s2.isEmpty()) {
+            return s2.pop();
+        }
+        else{
+            while(!s1.isEmpty()){
+                s2.push(s1.pop());
+            }
+            return s2.pop();
+        }
+    }
+
+    public int peek() {
+        if(!s2.isEmpty()) return s2.peek();
+        else{
+            while(!s1.isEmpty()){
+                s2.push(s1.pop());
+            }
+            return s2.peek();
+        }
+    }
+
+    public boolean empty() {
+
+        return s1.isEmpty() && s2.isEmpty();
+    }
+}
+```
 
 [283 Move Zeroes] [52.3% Easy]使用 nums[start++]✅
+```java
+public void moveZeroes(int[] nums) {
+        int start = 0;
+        if(nums == null || nums.length == 0) return;
+        for(int  i = 0; i < nums.length; i++){
+            if(nums[i] != 0){
+                nums[start] = nums[i];
+                start++;
+            }
+        }
+        while(start < nums.length){
+            nums[start++] = 0;
+        }
+    }
+```
 
 [344 Reverse String] [61.3%	Easy]使用 swap，記得 left++ right--✅
+```java
+public String reverseString(String s) {
+        if(s == null || s.length() == 0) return"";
 
-[add two numbers without using +] while(y!=0){int carry = x & y; x = x^y; y = carry << 1;} return x;
+        return swap(s);
+    }
+
+    public String swap(String s){
+        char[] r = s.toCharArray();
+        int right = s.length()-1;
+        for(int left = 0; left < s.length()/2; left++){
+            char temp = r[left];
+            r[left] = r[right];
+            r[right] = temp;
+            right--;
+        }
+        return String.valueOf(r);
+    }
+```
+
+[add two numbers without using +] 
+```java
+ while(y!=0){
+    int carry = x & y; 
+    x = x^y; 
+    y = carry << 1;
+ } 
+ return x;
+```

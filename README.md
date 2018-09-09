@@ -21,5 +21,5 @@ Java, Algorithm
 
 [283 Move Zeroes] [52.3% Easy]使用 nums[start++]✅
 
-[344 Reverse String] [61.3%	Easy]使用 swap✅
+[344 Reverse String] [61.3%	Easy]使用 swap，記得 left++ right--✅
 

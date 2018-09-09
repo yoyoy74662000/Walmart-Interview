@@ -15,7 +15,7 @@ Java, Algorithm
 
 [206 Reverse Linked List] [49.1% Easy]使用 prev temp head✅
 
-[214 Shortest Palindrome] [25.8% Hard]使用 HashMap✅
+[214 Shortest Palindrome] [25.8% Hard]背下來✅
 
 [230 Kth Smallest Element in a BST] [47.2% Medium]使用 HashMap✅
 

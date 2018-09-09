@@ -3,7 +3,7 @@ Java, Algorithm
 
 [3 Longest Substring Without Repeating Characters] [25.0%	Medium]使用 HashSet, HashMap✅
 
-[4 Median of Two Sorted Arrays] [23.8% Hard]
+[4 Median of Two Sorted Arrays] [23.8% Hard] 先merge兩個array，再去算中位數✅
 
 [21 Merge Two Sorted Lists] [43.0% Easy]使用一個helper 最還要注意 if(p ==null) else✅
 

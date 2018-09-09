@@ -17,6 +17,8 @@ Java, Algorithm
 
 [70 Climbing Stairs] [42.0%	Easy]使用 DP mem[i] = mem[i-1] + mem[i-2]✅
 
+[148 Sort List] [31.6%	Medium]請記住 取mid 再 merge✅
+
 [206 Reverse Linked List] [49.1% Easy]使用 prev temp head✅
 
 [214 Shortest Palindrome] [25.8% Hard]背下來✅

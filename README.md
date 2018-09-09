@@ -25,3 +25,4 @@ Java, Algorithm
 
 [344 Reverse String] [61.3%	Easy]使用 swap，記得 left++ right--✅
 
+[add two numbers without using +] while(y!=0){int carry = x & y; x = x^y; y = carry << 1;} return x;

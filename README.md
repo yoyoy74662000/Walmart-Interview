@@ -72,6 +72,49 @@ Java, Algorithm
     }
 ```
 
+[5 Longest Palindromic Substring] [25.0% Medium]使用一個helper left-- right++類似中心擴散出去✅
+```java
+ String res = "";
+    public String longestPalindrome(String s) {
+        if(s == null || s.length() ==0) return res;
+        for(int i = 0; i < s.length(); i++){
+            helper(s, i, i);
+            helper(s, i, i+1);
+        }
+        return res;
+    }
+    
+    public void helper(String s, int left, int right){
+        while(left >= 0 && right < s.length() && s.charAt(left)==s.charAt(right)){
+            left--;
+            right++;
+        }
+        String cur = s.substring(left + 1, right);
+        if(cur.length() > res.length()){
+            res = cur;
+        }
+        
+    }
+```
+[11 Container With Most Water] [38.5% Medium] 底*math.min高✅
+```java
+public int maxArea(int[] height) {
+        if(height == null || height.length == 0) return 0;
+        int start = 0, end = height.length -1;
+        int max = 0;
+        while(start < end){
+            // 高度要找最小的
+            max = Math.max(max, (end - start) * Math.min(height[start], height[end]));
+            if(height[start] > height[end]){
+                end--;
+            }else{
+                start++;
+            }
+        }
+        return max;
+    }
+```
+
 [21 Merge Two Sorted Lists] [43.0% Easy]使用一個helper 最還要注意 if(p ==null) else✅
 ```java
 public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
@@ -104,6 +147,30 @@ public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
             cur.next = p;
         }
         return dummy.next;
+    }
+```
+[22 Generate Parentheses] [50.0%	Medium] backtracking✅
+```java
+public List<String> generateParenthesis(int n) {
+        List<String> res = new ArrayList<>();    
+        String s = "";
+        helper(res, s, n, n);
+        return res;
+    }
+    
+    public void helper(List<String> res, String s, int left, int right){
+        if(left > right){
+            return;
+        }
+        if(left == 0 && right == 0){
+            res.add(s);
+        }
+        if(left > 0){
+            helper(res, s + '(', left -1, right);
+        }
+        if(right > 0){
+            helper(res, s + ')', left, right-1);
+        }
     }
 ```
 
@@ -171,6 +238,94 @@ public List<List<String>> groupAnagrams(String[] strs) {
 
     }
 ```
+[54 Spiral Matrix] [28.1%	Medium] 背起來✅
+```java
+public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> res = new ArrayList<>();
+        if (matrix == null || matrix.length == 0 || matrix[0] == null || matrix[0].length == 0) {
+            return res;
+        }
+        
+        int rowbegin = 0;
+        int rowend = matrix.length -1;
+        int colbegin = 0;
+        int colend = matrix[0].length -1;
+        
+
+        while (rowbegin <= rowend && colbegin <= colend) {
+            for (int i = colbegin; i <= colend; i++) {
+                res.add(matrix[rowbegin][i]);
+            }
+            rowbegin++;
+
+            for (int i = rowbegin; i <= rowend; i++) {
+                res.add(matrix[i][colend]);
+            }
+            colend--;
+
+            if (rowbegin <= rowend) {
+                for (int i = colend; i >= colbegin; i--) {
+                    res.add(matrix[rowend][i]);
+                }
+            }
+            rowend--;
+
+            if (colbegin <= colend) {
+                for (int i = rowend; i >= rowbegin; i--) {
+                    res.add(matrix[i][colbegin]);
+                }
+            }
+            colbegin++;
+        }
+
+        return res;
+    }
+```
+[56. Merge Intervals] [32.9%	Medium]背起來✅
+```java
+public List<Interval> merge(List<Interval> intervals) {
+        // sort start&end
+        int n = intervals.size();
+        int[] starts = new int[n];
+        int[] ends = new int[n];
+        for (int i = 0; i < n; i++) {
+            starts[i] = intervals.get(i).start;
+            ends[i] = intervals.get(i).end;
+        }
+        Arrays.sort(starts);
+        Arrays.sort(ends);
+        // loop through
+        List<Interval> res = new ArrayList<Interval>();
+        for (int i = 0, j = 0; i < n; i++) { // j is start of interval.
+            if (i == n - 1 || starts[i + 1] > ends[i]) {
+                res.add(new Interval(starts[j], ends[i]));
+                j = i + 1;
+            }
+        }
+        return res;
+    }
+```
+[62 Unique Paths] [44.2%	Medium]使用 DP 邊上 相加✅
+```java
+public int uniquePaths(int m, int n) {
+        int[][] res = new int[m][n];
+        
+        for(int i = 0; i < m; i++){
+            res[i][0] = 1;
+        }
+        
+        for(int j = 0; j < n; j++){
+            res[0][j] = 1;
+        }
+        
+        for(int i = 1; i < m; i++){
+            for(int j = 1; j < n; j++){
+                res[i][j] = res[i-1][j] + res[i][j-1];
+            }
+        }
+        return res[m-1][n-1];
+    }
+```
 
 [70 Climbing Stairs] [42.0%	Easy]使用 DP mem[i] = mem[i-1] + mem[i-2]✅
 ```java
@@ -185,6 +340,37 @@ public int climbStairs(int n) {
             mem[i] = mem[i-1] + mem[i-2];
         }
         return mem[n-1];
+    }
+```
+[79 Word Search] [28.9%	Medium]請記住 backtracking✅
+```java
+public boolean exist(char[][] board, String word) {
+        for(int i = 0; i < board.length; i++){
+            for(int j = 0; j < board[0].length; j++){
+                //找第一個起始值
+                if(exist(board, word, i, j, 0)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean exist(char[][] board, String word, int i, int j, int start){
+        if(start >= word.length()) return true;
+        if(i < 0 || i >= board.length || j < 0 || j >= board[0].length) return false;
+        if(board[i][j] == word.charAt(start++)){
+            char c = board[i][j];
+            board[i][j] = '#';
+            boolean res = exist(board, word, i + 1, j, start) ||
+                          exist(board, word, i - 1, j, start) ||
+                          exist(board, word, i, j + 1, start) ||
+                          exist(board, word, i, j - 1, start);
+            board[i][j] = c;
+            return res;
+        }else {
+            return false;
+        }
     }
 ```
 
@@ -363,6 +549,21 @@ public class ImplementQueueusingStacks {
         return s1.isEmpty() && s2.isEmpty();
     }
 }
+```
+[236 Lowest Common Ancestor of a Binary Tree] [31.6% Medium]使用 recursion✅
+```java
+public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null || root == p || root == q) return root;
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        
+         if (left != null && right != null){
+            return root;
+        }
+        else {
+            return left == null ? right : left;
+        }
+    }
 ```
 
 [283 Move Zeroes] [52.3% Easy]使用 nums[start++]✅

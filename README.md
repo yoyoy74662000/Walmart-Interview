@@ -471,7 +471,7 @@ public ListNode reverseList(ListNode head) {
     }
 ```
 
-[214 Shortest Palindrome] [25.8% Hard]背下來✅
+[214 Shortest Palindrome] [25.8% Hard]背下來 StringBuilder(s.substring(end+1)).reverse().toString()+s;✅
 ```java
 public String shortestPalindrome(String s) {
         int i = 0;

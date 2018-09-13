@@ -603,7 +603,27 @@ public String reverseString(String s) {
         return String.valueOf(r);
     }
 ```
-
+[406 Longest Palindrome] [46.3%	Easy]使用 HashSet 注意 return 那邊 基偶問題✅
+```java
+public int longestPalindrome(String s) {
+        if(s == null || s.length() == 0) return 0;
+        int count = 0;
+        HashSet<Character> set = new HashSet<>();
+        for(char c : s.toCharArray()){
+            if(set.contains(c)){
+                set.remove(c);
+                count++;
+            }else{
+                set.add(c);
+            }
+        }
+        if(set.size() != 0){
+            return count*2 + 1;
+        }else{
+            return count*2;
+        }
+    }
+```
 [add two numbers without using +] 
 ```java
  while(y!=0){

@@ -373,6 +373,45 @@ public boolean exist(char[][] board, String word) {
         }
     }
 ```
+[92. Reverse Linked List II] [31.6%	Medium]使用dummy 記住 temp prev cur 使用方式✅
+```java
+public ListNode reverseBetween(ListNode head, int m, int n) {
+        ListNode dummy = new ListNode(0);
+        dummy.next =head;
+        ListNode cur = dummy.next;
+        ListNode prev = dummy;
+        for(int i = 1; i < m; i++){
+            cur = cur.next;
+            prev = prev.next;
+        }
+        for(int i = 0; i < n - m; i++){
+            ListNode temp = cur.next;
+            cur.next = temp.next;
+            temp.next = prev.next;
+            prev.next = temp;
+        }
+        return dummy.next;
+    }
+```
+
+[138 Copy List with Random Pointer] [31.6%	Medium]請記住 HashMap✅
+```java
+public RandomListNode copyRandomList(RandomListNode head) {
+        HashMap<RandomListNode, RandomListNode> map = new HashMap<>();
+        RandomListNode cur = head;
+        while(cur != null){
+            map.put(cur, new RandomListNode(cur.label));
+            cur = cur.next;
+        }
+        cur = head;
+        while(cur != null){
+            map.get(cur).next = map.get(cur.next);
+            map.get(cur).random = map.get(cur.random);
+            cur = cur.next;
+        }
+        return map.get(head);
+    }
+```
 
 [148 Sort List] [31.6%	Medium]請記住 取mid 再 merge✅
 ```java
@@ -455,7 +494,23 @@ public static void main(String[] args) {
         else return nums[end];
     }
 ```
-
+[203 Remove Linked List Elements] [49.1% Easy]使用 dummy✅
+```java
+public ListNode removeElements(ListNode head, int val) {
+        if(head == null) return null;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode cur = dummy;
+        while(cur.next != null){
+            if(cur.next.val == val){
+                cur.next = cur.next.next;
+            }else{
+                cur = cur.next;
+            }
+        }
+        return dummy.next;
+    }
+```
 [206 Reverse Linked List] [49.1% Easy]使用 prev temp head✅
 ```java
 public ListNode reverseList(ListNode head) {
